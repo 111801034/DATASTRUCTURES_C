@@ -1,0 +1,46 @@
+#include<stdio.h>
+
+void swap(int *a,int *b){
+  // *a=*a+*b;
+  // *b=*a-*b;
+  // *a=*a-*b;
+  int temp=*a;
+  *a=*b;
+  *b=temp;
+}
+
+
+int fixLast(int arr[],int index1,int index2){
+  if(index2>index1){
+    int i=index1-1;
+    for(int j=index1;j<index2;j++){
+      if(arr[j]<arr[index2]){
+        i++;
+        swap(&arr[j],&arr[i]);
+      }
+    }
+    i++;
+    swap(&arr[i],&arr[index2]);
+    return i;
+  }
+  return -1;
+}
+
+void quickSort(int arr[],int index1,int index2){
+  if(index2>index1){
+    int fix=fixLast(arr,index1,index2);
+    quickSort(arr,index1,fix-1);
+    quickSort(arr,fix+1,index2);
+  }
+}
+int main(){
+  printf("hello world\n");
+  int arr[]={3,4,3,5,1,-1,10};
+  int size=sizeof(arr)/sizeof(arr[0]);
+  quickSort(arr,0,size-1);
+  for(int i=0;i<size;i++){
+    printf("%d ",arr[i]);
+  }
+  printf("\n");
+  return 0;
+}
