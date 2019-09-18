@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+  int data;
+  struct node*next;
+};
+
+int insertAfter(int data,int key,struct node*head){
+  struct node*temp=head;
+  while(temp){
+    if(temp->data==key){
+      struct node*newNode=malloc(sizeof(struct node));
+      newNode->next=temp->next;
+      newNode->data=data;
+      temp->next=newNode;
+      return 1;
+    }
+    temp=temp->next;
+  }
+  printf("didnt find the key\n");
+  return -1;
+}
+
+int insertLast(int data,struct node**head){
+  struct node*temp=*head;
+  struct node*newNode=malloc(sizeof(struct node));
+  newNode->data=data;
+  if(*head==NULL){
+    *head=newNode;
+   // printf("hi\n");
+    return 1;
+  }
+  while(temp->next){
+    temp=temp->next;
+  }
+
+
+  temp->next=newNode;
+  return 1;
+}
+
+void print(struct node*head){
+  struct node*temp=head;
+  while(temp){
+    printf("%d ",temp->data);
+    temp=temp->next;
+  }
+  printf("\n");
+}
+
+
+int delete(int data,struct node**head){
+  struct node*temp=*head,*parent=NULL;
+  if(temp==NULL){
+    printf("cant delete \n");
+    return -1;
+  }
+  if(temp->data==data){
+  *head=temp->next;
+  free(temp);
+  return 1;
+  }
+  while(temp){
+    if(temp->data==data){
+      parent->next=temp->next;
+      free(temp);
+      return 1;
+    }
+    parent=temp;
+    temp=temp->next;
+  }
+  return -1;
+}
+
+int main(void) {
+  printf("Hello World\n");
+  struct node*head=NULL;
+  insertLast(1, &head);
+  insertAfter(2, 1, head);
+  insertAfter(3, 2, head);
+  insertLast(4,&head);
+  delete(1, &head);
+  print(head);
+
+  return 0;
+}
